@@ -107,7 +107,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Pet"
-        '405':
+        '400':
           description: Invalid input
       security:
       - petstore_auth:
