@@ -1,0 +1,5 @@
+{
+    "karateIDE.karateCli.karateEnv": "",
+    "karateIDE.karateCli.karateOptions": "-f json,cucumber:json,junit:xml",
+    "karateIDE.karateCli.mockServerCommandTemplate": "java -cp '${classpath}' com.intuit.karate.Main -W -m '${feature}' -p 3000 -P 'api/v3'",
+}
