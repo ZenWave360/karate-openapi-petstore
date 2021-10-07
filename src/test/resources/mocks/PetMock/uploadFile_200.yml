@@ -1,0 +1,7 @@
+responseStatus: 200
+request: {}
+requestMatch: {}
+response:
+  code: -1
+  type: fill some value
+  message: fill some value

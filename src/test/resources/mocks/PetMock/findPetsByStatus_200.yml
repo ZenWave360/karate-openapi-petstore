@@ -1,0 +1,15 @@
+responseStatus: 200
+request: {}
+requestMatch: {}
+response:
+  - id: 10
+    name: doggie
+    category:
+      id: 1
+      name: Dogs
+    photoUrls:
+      - fill some value
+    tags:
+      - id: 0
+        name: fill some value
+    status: available
