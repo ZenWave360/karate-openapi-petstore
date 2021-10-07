@@ -5,13 +5,16 @@ Background:
 * url baseUrl
 
 Scenario Outline: Test uploadFile for <status> status code
-
-	* def args = read(<testDataFile>)
-	* def result = call read('uploadFile.feature@operation') args
+  * configure charset = null
+	* def body = read(<testDataFile>)
+  * def params = { petId: <petId> }
+  * def statusCode = <status>
+  * def matchResponse = true
+	* def result = call read('uploadFile.feature@operation')
 	* match result.responseStatus == <status>
 		Examples:
-		| status | testDataFile |
-		| 200    | 'test-data/uploadFile_200.yml' |
+		| status | petId | testDataFile |
+		| 200    | 0     |'test-data/karate-logo.png' |
 
 
 @ignore @inline

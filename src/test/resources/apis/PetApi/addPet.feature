@@ -25,7 +25,7 @@ Scenario: explore addPet inline
   "headers": {},
   "params": {},
   "body": {
-    "id": 10,
+    "id": 0,
     "name": "doggie",
     "category": {
       "id": 1,

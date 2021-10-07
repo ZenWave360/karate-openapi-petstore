@@ -10,9 +10,9 @@ Scenario Outline: Test findPetsByTags for <status> status code
 	* def result = call read('findPetsByTags.feature@operation') { statusCode: #(+params.status), params: #(params), matchResponse: #(params.matchResponse) }
 	* match result.responseStatus == <status>
 		Examples:
-		| status | tags | matchResponse |
-		| 200    |      | true          |
-		| 400    |      | true          |
+		| status | tags       | matchResponse |
+		| 200    | defaultTag | true          |
+		| 400    |            | false         |
 
 
 @ignore @inline

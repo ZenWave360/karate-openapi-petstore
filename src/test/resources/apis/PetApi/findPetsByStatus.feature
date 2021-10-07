@@ -8,18 +8,18 @@ Scenario Outline: Test findPetsByStatus for <status> status code
 
 	* def params = __row
 	* def result = call read('findPetsByStatus.feature@operation') { statusCode: #(+params.status), params: #(params), matchResponse: #(params.matchResponse) }
-	* match result.responseStatus == <status>
+	* match result.responseStatus == <statusCode>
 		Examples:
-		| status | status    | matchResponse |
-		| 200    | available | true          |
-		| 400    | available | true          |
+		| statusCode | status    | matchResponse |
+		| 200        | available | true          |
+		| 400        | invalidXX | true          |
 
 
 @ignore @inline
 Scenario: explore findPetsByStatus inline
 	You may use this test for quick API exploratorial purposes.
 * def statusCode = 200
-* def params = {"status":"available"}
+* def params = {"status":"'available'"}
 * def matchResponse = true
 * call read('findPetsByStatus.feature@operation') 
 

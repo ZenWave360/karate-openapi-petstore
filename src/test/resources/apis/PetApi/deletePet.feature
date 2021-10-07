@@ -12,7 +12,7 @@ Scenario Outline: Test deletePet for <status> status code
 		Examples:
 		| status | api_key         | petId | matchResponse |
 		| 200    | fill some value | 0     | true          |
-		| 400    | fill some value | 0     | true          |
+		| 400    | fill some value | A     | false         |
 
 
 @ignore @inline

@@ -14,7 +14,7 @@ Scenario Outline: Test updatePet for <status> status code
 		| 200    | 'test-data/updatePet_200.yml' |
 		| 400    | 'test-data/updatePet_400.yml' |
 		| 404    | 'test-data/updatePet_404.yml' |
-		| 405    | 'test-data/updatePet_405.yml' |
+    # | 405    | 'test-data/updatePet_405.yml' |
 
 
 @ignore @inline

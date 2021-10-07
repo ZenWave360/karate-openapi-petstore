@@ -2,7 +2,7 @@ statusCode: 400
 headers: {}
 params: {}
 body:
-  id: 10
+  id: AAA
   name: doggie
   category:
     id: 1
@@ -13,4 +13,4 @@ body:
     - id: 0
       name: fill some value
   status: available
-matchResponse: true
+matchResponse: false

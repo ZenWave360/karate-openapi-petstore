@@ -12,8 +12,8 @@ Scenario Outline: Test getPetById for <status> status code
 		Examples:
 		| status | petId | matchResponse |
 		| 200    | 0     | true          |
-		| 400    | 0     | true          |
-		| 404    | 0     | true          |
+		| 400    | A     | false         |
+		| 404    | -11111111111 | false  |
 
 
 @ignore @inline
