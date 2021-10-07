@@ -1,0 +1,7 @@
+statusCode: 200
+headers: {}
+params:
+  petId: 0
+  additionalMetadata: fill some value
+body: fill some value
+matchResponse: true
