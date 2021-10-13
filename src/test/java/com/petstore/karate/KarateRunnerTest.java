@@ -44,6 +44,7 @@ public class KarateRunnerTest {
     }
     
     public static void moveJUnitReports(String karateReportDir, String surefireReportDir) throws IOException {
+        new File(surefireReportDir).mkdirs();
         Collection<File> xmlFiles = Files.find(Paths.get(karateReportDir), Integer.MAX_VALUE,
                 (filePath, fileAttr) -> fileAttr.isRegularFile() && filePath.toString().endsWith(".xml"))
                 .map(p -> p.toFile()).collect(Collectors.toList());
