@@ -2,7 +2,7 @@ statusCode: 404
 headers: {}
 params: {}
 body:
-  id: -1111111111
+  id: -1
   name: doggie
   category:
     id: 1

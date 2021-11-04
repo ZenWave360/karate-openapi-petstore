@@ -1,9 +1,11 @@
+@openapi-file=petstore-openapi.yml
 Feature: Update an existing pet
 	Update an existing pet by Id
 
 Background:
 * url baseUrl
 
+@operationId=updatePet
 Scenario Outline: Test updatePet for <status> status code
 
 	* def args = read(<testDataFile>)
@@ -14,10 +16,10 @@ Scenario Outline: Test updatePet for <status> status code
 		| 200    | 'test-data/updatePet_200.yml' |
 		| 400    | 'test-data/updatePet_400.yml' |
 		| 404    | 'test-data/updatePet_404.yml' |
-    # | 405    | 'test-data/updatePet_405.yml' |
+		#| 405    | 'test-data/updatePet_405.yml' |
 
 
-@ignore @inline
+@operationId=updatePet
 Scenario: explore updatePet inline
 	You may use this test for quick API exploratorial purposes.
 * def payload =
@@ -27,7 +29,7 @@ Scenario: explore updatePet inline
   "headers": {},
   "params": {},
   "body": {
-    "id": 10,
+    "id": 1,
     "name": "doggie",
     "category": {
       "id": 1,
@@ -50,7 +52,8 @@ Scenario: explore updatePet inline
 * call read('updatePet.feature@operation') payload
 
 
-@ignore @operation
+@ignore
+@operation @operationId=updatePet @openapi-file=petstore-openapi.yml
 Scenario: operation PetApi/updatePet
 * def args = 
 """
@@ -69,10 +72,9 @@ Given path '/pet'
 And headers headers
 And request args.body
 When method PUT
-
-* def expectedStatusCode = args.statusCode || responseStatus
-* match responseStatus == expectedStatusCode
-
+# validate status code
+* if (args.statusCode && responseStatus != args.statusCode) karate.fail(`status code was: ${responseStatus}, expected: ${args.statusCode}`)
+# validate response body
 * if (args.matchResponse === true) karate.call('updatePet.feature@validate')
 
 @ignore @validate

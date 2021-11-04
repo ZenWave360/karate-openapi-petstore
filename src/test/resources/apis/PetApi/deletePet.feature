@@ -1,21 +1,23 @@
+@openapi-file=petstore-openapi.yml
 Feature: Deletes a pet
 	
 
 Background:
 * url baseUrl
 
+@operationId=deletePet
 Scenario Outline: Test deletePet for <status> status code
 
 	* def params = __row
-	* def result = call read('deletePet.feature@operation') { statusCode: #(+params.status), params: #(params), matchResponse: #(params.matchResponse) }
-	* match result.responseStatus == <status>
+	* def result = call read('deletePet.feature@operation') { statusCode: #(+params.statusCode), params: #(params), matchResponse: #(params.matchResponse) }
+	* match result.responseStatus == <statusCode>
 		Examples:
-		| status | api_key         | petId | matchResponse |
-		| 200    | fill some value | 0     | true          |
-		| 400    | fill some value | A     | false         |
+		| statusCode | api_key         | petId | matchResponse |
+		| 200        | fill some value | 10    | true          |
+		| 400        | fill some value | A     | false         |
 
 
-@ignore @inline
+@operationId=deletePet
 Scenario: explore deletePet inline
 	You may use this test for quick API exploratorial purposes.
 * def statusCode = 200
@@ -24,7 +26,8 @@ Scenario: explore deletePet inline
 * call read('deletePet.feature@operation') 
 
 
-@ignore @operation
+@ignore
+@operation @operationId=deletePet @openapi-file=petstore-openapi.yml
 Scenario: operation PetApi/deletePet
 * def args = 
 """
@@ -42,7 +45,5 @@ Scenario: operation PetApi/deletePet
 Given path '/pet/', args.params.petId
 And headers headers
 When method DELETE
-
-* def expectedStatusCode = args.statusCode || responseStatus
-* match responseStatus == expectedStatusCode
-
+# validate status code
+* if (args.statusCode && responseStatus != args.statusCode) karate.fail(`status code was: ${responseStatus}, expected: ${args.statusCode}`)

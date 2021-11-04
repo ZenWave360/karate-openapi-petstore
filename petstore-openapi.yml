@@ -24,6 +24,7 @@ externalDocs:
 servers:
 - url: "https://petstore3.swagger.io/api/v3"
 - url: "http://localhost:3000/api/v3"
+- url: "http://localhost:3000"
 tags:
 - name: pet
   description: Everything about your Pets
@@ -216,6 +217,24 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Pet"
+              examples:
+                pet-1:
+                  summary: Dynamic Pet
+                  x-apimock-when: pathParams.petId > 0
+                  x-apimock-transform:
+                    id: pathParams.petId
+                    creationDate: 'date("dd/MM/yyy", "-1d")'
+                  value:
+                      id: 0
+                      name: 'DOG {{Math.random()}}'
+                      category:
+                          id: 0
+                          name: DOG
+                      photoUrls: []
+                      tags:
+                        - id: 0
+                          name: 'name'
+                      status: sold
         '400':
           description: Invalid ID supplied
         '404':
@@ -805,3 +824,29 @@ components:
       type: apiKey
       name: api_key
       in: header
+  examples:
+    karate-pets:
+      summary: Pets for karate mocks dataset
+      x-apimock-karate-var: pets
+      x-apimock-seed: 20
+      x-apimock-transform:
+        $[*].id: sequenceNext()
+        $[*].status: "Math.random() >= 0.5? 'sold' : 'available'"
+      value:
+        - id: 0
+          name: 'Dog Name {{Math.random()}}'
+          category:
+            id: 1
+            name: DOG
+          photoUrls: []
+          status: sold
+        - id: 0
+          name: 'Cat Name {{Math.random()}}'
+          category:
+            id: 2
+            name: CAT
+          photoUrls: []
+          tags:
+            - id: 0
+              name: 'Cat'
+          status: sold

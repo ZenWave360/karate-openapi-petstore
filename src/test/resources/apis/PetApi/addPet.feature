@@ -1,9 +1,11 @@
+@openapi-file=petstore-openapi.yml
 Feature: Add a new pet to the store
 	Add a new pet to the store
 
 Background:
 * url baseUrl
 
+@operationId=addPet
 Scenario Outline: Test addPet for <status> status code
 
 	* def args = read(<testDataFile>)
@@ -15,7 +17,7 @@ Scenario Outline: Test addPet for <status> status code
 		| 400    | 'test-data/addPet_400.yml' |
 
 
-@ignore @inline
+@operationId=addPet
 Scenario: explore addPet inline
 	You may use this test for quick API exploratorial purposes.
 * def payload =
@@ -25,7 +27,7 @@ Scenario: explore addPet inline
   "headers": {},
   "params": {},
   "body": {
-    "id": 0,
+    "id": 10,
     "name": "doggie",
     "category": {
       "id": 1,
@@ -40,7 +42,7 @@ Scenario: explore addPet inline
         "name": "fill some value"
       }
     ],
-    "status": "pending"
+    "status": "sold"
   },
   "matchResponse": true
 }
@@ -48,7 +50,8 @@ Scenario: explore addPet inline
 * call read('addPet.feature@operation') payload
 
 
-@ignore @operation
+@ignore
+@operation @operationId=addPet @openapi-file=petstore-openapi.yml
 Scenario: operation PetApi/addPet
 * def args = 
 """
@@ -67,10 +70,9 @@ Given path '/pet'
 And headers headers
 And request args.body
 When method POST
-
-* def expectedStatusCode = args.statusCode || responseStatus
-* match responseStatus == expectedStatusCode
-
+# validate status code
+* if (args.statusCode && responseStatus != args.statusCode) karate.fail(`status code was: ${responseStatus}, expected: ${args.statusCode}`)
+# validate response body
 * if (args.matchResponse === true) karate.call('addPet.feature@validate')
 
 @ignore @validate

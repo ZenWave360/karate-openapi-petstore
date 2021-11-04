@@ -2,7 +2,7 @@ statusCode: 200
 headers: {}
 params: {}
 body:
-  id: 10
+  id: 2
   name: doggie
   category:
     id: 1
@@ -12,5 +12,5 @@ body:
   tags:
     - id: 0
       name: fill some value
-  status: available
+  status: sold
 matchResponse: true

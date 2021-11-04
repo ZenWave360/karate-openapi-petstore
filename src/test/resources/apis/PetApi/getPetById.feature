@@ -1,9 +1,11 @@
+@openapi-file=petstore-openapi.yml
 Feature: Find pet by ID
 	Returns a single pet
 
 Background:
 * url baseUrl
 
+@operationId=getPetById
 Scenario Outline: Test getPetById for <status> status code
 
 	* def params = __row
@@ -11,21 +13,22 @@ Scenario Outline: Test getPetById for <status> status code
 	* match result.responseStatus == <status>
 		Examples:
 		| status | petId | matchResponse |
-		| 200    | 0     | true          |
+		| 200    | 1     | true          |
 		| 400    | A     | false         |
-		| 404    | -11111111111 | false  |
+		| 404    | 0     | false         |
 
 
-@ignore @inline
+@operationId=getPetById
 Scenario: explore getPetById inline
 	You may use this test for quick API exploratorial purposes.
 * def statusCode = 200
-* def params = {"petId":0}
+* def params = {"petId": 1}
 * def matchResponse = true
 * call read('getPetById.feature@operation') 
 
 
-@ignore @operation
+@ignore
+@operation @operationId=getPetById @openapi-file=petstore-openapi.yml
 Scenario: operation PetApi/getPetById
 * def args = 
 """
@@ -43,10 +46,9 @@ Scenario: operation PetApi/getPetById
 Given path '/pet/', args.params.petId
 And headers headers
 When method GET
-
-* def expectedStatusCode = args.statusCode || responseStatus
-* match responseStatus == expectedStatusCode
-
+# validate status code
+* if (args.statusCode && responseStatus != args.statusCode) karate.fail(`status code was: ${responseStatus}, expected: ${args.statusCode}`)
+# validate response body
 * if (args.matchResponse === true) karate.call('getPetById.feature@validate')
 
 @ignore @validate

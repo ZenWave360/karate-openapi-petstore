@@ -1,22 +1,23 @@
+@openapi-file=petstore-openapi.yml
 Feature: Finds Pets by status
 	Multiple status values can be provided with comma separated strings
 
 Background:
 * url baseUrl
 
+@operationId=findPetsByStatus
 Scenario Outline: Test findPetsByStatus for <status> status code
 
 	* def params = __row
-	* def result = call read('findPetsByStatus.feature@operation') { statusCode: #(+params.status), params: #(params), matchResponse: #(params.matchResponse) }
+	* def result = call read('findPetsByStatus.feature@operation') { statusCode: #(+params.statusCode), params: #(params), matchResponse: #(params.matchResponse) }
 	* match result.responseStatus == <statusCode>
 		Examples:
-		| statusCode | status   | matchResponse |
-		| 200    | available    | true          |
-	  | 200    | sold         | true          | 
-		| 400    | availableXXX | false         |
+		| statusCode | status    | matchResponse |
+		| 200        | available | true          |
+		| 400        | availableXX | false       |
 
 
-@ignore @inline
+@operationId=findPetsByStatus
 Scenario: explore findPetsByStatus inline
 	You may use this test for quick API exploratorial purposes.
 * def statusCode = 200
@@ -25,7 +26,8 @@ Scenario: explore findPetsByStatus inline
 * call read('findPetsByStatus.feature@operation') 
 
 
-@ignore @operation
+@ignore
+@operation @operationId=findPetsByStatus @openapi-file=petstore-openapi.yml
 Scenario: operation PetApi/findPetsByStatus
 * def args = 
 """
@@ -44,10 +46,9 @@ Given path '/pet/findByStatus'
 And param status = args.params.status
 And headers headers
 When method GET
-
-* def expectedStatusCode = args.statusCode || responseStatus
-* match responseStatus == expectedStatusCode
-
+# validate status code
+* if (args.statusCode && responseStatus != args.statusCode) karate.fail(`status code was: ${responseStatus}, expected: ${args.statusCode}`)
+# validate response body
 * if (args.matchResponse === true) karate.call('findPetsByStatus.feature@validate')
 
 @ignore @validate

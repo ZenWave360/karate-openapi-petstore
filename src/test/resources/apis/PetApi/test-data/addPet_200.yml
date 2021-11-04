@@ -12,5 +12,5 @@ body:
   tags:
     - id: 0
       name: fill some value
-  status: pending
+  status: available
 matchResponse: true
