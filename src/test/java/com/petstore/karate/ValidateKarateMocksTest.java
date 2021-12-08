@@ -1,37 +1,28 @@
 package com.petstore.karate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
 import com.intuit.karate.RuntimeHook;
 import com.intuit.karate.StringUtils;
-import com.intuit.karate.Suite;
 import com.intuit.karate.cli.IdeMain;
 import com.intuit.karate.core.ScenarioRuntime;
 import com.intuit.karate.http.HttpRequest;
 import com.intuit.karate.http.Response;
-import io.github.apimock.MockServer;
+
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import io.github.apimock.MockServer;
 
 public class ValidateKarateMocksTest {
 
-    private String classpath = "classpath:apis/";
+    private String classpath = "classpath:";
 
     io.github.apimock.MockServer server;
 
@@ -54,7 +45,7 @@ public class ValidateKarateMocksTest {
     public void validateKarateMocks() throws Exception {
 
         String karateEnv = defaultString(System.getProperty("karate.env"), "mock").toLowerCase();
-        String launchCommand = defaultString(System.getProperty("KARATE_OPTIONS"), "-t ~@mock=off " + classpath);
+        String launchCommand = defaultString(System.getProperty("KARATE_OPTIONS"), "-t @mock-validation " + classpath);
 
         com.intuit.karate.Main options = IdeMain.parseIdeCommandLine(launchCommand);
 
