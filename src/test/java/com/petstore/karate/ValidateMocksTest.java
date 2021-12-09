@@ -1,10 +1,5 @@
 package com.petstore.karate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
 import com.intuit.karate.RuntimeHook;
@@ -13,14 +8,17 @@ import com.intuit.karate.cli.IdeMain;
 import com.intuit.karate.core.ScenarioRuntime;
 import com.intuit.karate.http.HttpRequest;
 import com.intuit.karate.http.Response;
-
+import io.github.apimock.MockServer;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import io.github.apimock.MockServer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
-public class ValidateKarateMocksTest {
+public class ValidateMocksTest {
 
     private String classpath = "classpath:";
 
