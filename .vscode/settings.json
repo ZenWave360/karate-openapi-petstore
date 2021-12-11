@@ -1,4 +1,4 @@
 {
-    "karateIDE.karateCli.karateEnv": "mock",
+    "karateIDE.karateCli.karateEnv": "",
     "karateIDE.karateCli.mockServerOptions": "-W -p 3000 -P api/v3",
 }
