@@ -33,14 +33,14 @@ public class PetDownloader {
      */
     public void fetchPets(File targetJsonFile) throws IOException {
         Json availablePets = Http.to(baseUrl + "/pet/findByStatus?status=available").get().json();
-        List availableDogs = availablePets.get("$.[?(@.category.name==\"Dogs\")]");
-        List availableLions = availablePets.get("$.[?(@.category.name==\"Lions\")]");
+        List<Object> availableDogs = availablePets.get("$.[?(@.category.name==\"Dogs\")]");
+        List<Object> availableLions = availablePets.get("$.[?(@.category.name==\"Lions\")]");
 
         Json soldPets = Http.to(baseUrl + "/pet/findByStatus?status=sold").get().json();
-        List soldDogs = availablePets.get("$.[?(@.category.name==\"Dogs\")]");
-        List soldLions = availablePets.get("$.[?(@.category.name==\"Lions\")]");
+        List<Object> soldDogs = availablePets.get("$.[?(@.category.name==\"Dogs\")]");
+        List<Object> soldLions = availablePets.get("$.[?(@.category.name==\"Lions\")]");
 
-        List localDataStore = new ArrayList();
+        List<Object> localDataStore = new ArrayList<>();
         localDataStore.addAll(availableDogs.subList(0, Math.max(3, availableLions.size())));
         localDataStore.addAll(soldDogs.subList(0, Math.max(3, soldLions.size())));
 
