@@ -23,7 +23,7 @@ And [ZenWave KarateIDE VSCode extension](https://marketplace.visualstudio.com/it
 - Atomic and Data Driven Tests: https://github.com/ZenWave360/karate-openapi-petstore/tree/master/src/test/resources/apis/PetApi
 - Business Flow Test (CRUD Pet): https://github.com/ZenWave360/karate-openapi-petstore/blob/master/src/test/resources/apis/PetApi/PetCRUD.feature
 - Stateful Pet Mock: https://github.com/ZenWave360/karate-openapi-petstore/blob/master/src/test/resources/mocks/PetMock.feature
-- Mock initial DataSet is populated from: https://github.com/ZenWave360/karate-openapi-petstore/blob/master/petstore-openapi.yml#L830
+- Mock initial DataSet is populated from: https://github.com/ZenWave360/karate-openapi-petstore/blob/master/petstore-openapi.yml#L853
 - Mock Validation Test: https://github.com/ZenWave360/karate-openapi-petstore/blob/master/src/test/resources/mocks/mock-validation.feature
 
 ### Runners for CI/CD Test Automation
