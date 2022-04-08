@@ -42,7 +42,7 @@ paths:
   "/pet":
     put:
       tags:
-      - pet
+        - pet
       summary: Update an existing pet
       description: Update an existing pet by Id
       operationId: updatePet
@@ -148,7 +148,48 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/Pet"
-        '400':
+              examples:
+                sold-pets:
+                  x-apimock-when: paramValue('status') == 'sold'
+                  x-apimock-seed: 20
+                  x-apimock-transform:
+                    $[*].id: sequenceNext()
+                    $[*].category: randomCategory()
+                    $[*].creationDate: "randomDate(-365, 0)" # created on last year
+                  value:
+                    - id: 0
+                      name: "Grommit {{Math.random()}}"
+                      status: sold
+                      photoUrls:
+                        - http://foo.bar.com/1.jpg
+                        - http://foo.bar.com/2.jpg
+                      category:
+                        id: 6
+                        name: Category 1
+                      tags:
+                        - name: tag1
+                        - name: tag2
+                available-pets:
+                  x-apimock-when: paramValue('status') == 'available'
+                  x-apimock-seed: 20
+                  x-apimock-transform:
+                    $[*].id: sequenceNext()
+                    $[*].category: randomCategory()
+                    $[*].creationDate: 'date("dd/MM/yyy", "-1d")'
+                  value:
+                    - id: 0
+                      name: "Grommit {{Math.random()}}"
+                      status: available
+                      photoUrls:
+                        - http://foo.bar.com/1.jpg
+                        - http://foo.bar.com/2.jpg
+                      category:
+                        id: 6
+                        name: Category 1
+                      tags:
+                        - name: tag1
+                        - name: tag2
+        "400":
           description: Invalid status value
       security:
       - petstore_auth:
@@ -217,25 +258,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Pet"
-              examples:
-                pet-1:
-                  summary: Dynamic Pet
-                  x-apimock-when: pathParams.petId > 0
-                  x-apimock-transform:
-                    id: pathParams.petId
-                    creationDate: 'date("dd/MM/yyy", "-1d")'
-                  value:
-                      id: 0
-                      name: 'DOG {{Math.random()}}'
-                      category:
-                          id: 0
-                          name: DOG
-                      photoUrls: []
-                      tags:
-                        - id: 0
-                          name: 'name'
-                      status: sold
-        '400':
+        "400":
           description: Invalid ID supplied
         '404':
           description: Pet not found
@@ -834,19 +857,26 @@ components:
         $[*].status: "Math.random() >= 0.5? 'sold' : 'available'"
       value:
         - id: 0
-          name: 'Dog Name {{Math.random()}}'
-          category:
-            id: 1
-            name: DOG
-          photoUrls: []
+          name: "Dog Name {{Math.random()}}"
           status: sold
-        - id: 0
-          name: 'Cat Name {{Math.random()}}'
+          photoUrls:
+            - http://foo.bar.com/1.jpg
+            - http://foo.bar.com/2.jpg
           category:
-            id: 2
-            name: CAT
-          photoUrls: []
+            id: 6
+            name: Category 1
           tags:
-            - id: 0
-              name: 'Cat'
+            - name: tag1
+            - name: tag2
+        - id: 0
+          name: "Cat Name {{Math.random()}}"
           status: sold
+          photoUrls:
+            - http://foo.bar.com/1.jpg
+            - http://foo.bar.com/2.jpg
+          category:
+            id: 6
+            name: Category 1
+          tags:
+            - name: tag1
+            - name: tag2

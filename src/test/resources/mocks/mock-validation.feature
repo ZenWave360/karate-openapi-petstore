@@ -68,7 +68,7 @@ Then status 200
 # Finds Pets by status
 @operationId=findPetsByStatus
 Scenario: validate findPetsByStatus mock endpoint
-Given def params = {"status":"available"}
+Given def params = {"status":"sold"}
 Given path '/pet/findByStatus'
 And param status = params.status
 When method GET
@@ -77,7 +77,7 @@ Then status 200
 # Finds Pets by tags
 @operationId=findPetsByTags
 Scenario: validate findPetsByTags mock endpoint
-Given def params = {"tags":""}
+Given def params = {"tags": ["tag1"]}
 Given path '/pet/findByTags'
 And param tags = params.tags
 When method GET
