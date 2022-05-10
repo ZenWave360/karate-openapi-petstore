@@ -12,8 +12,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>      
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <karate.version>1.2.0.RC5</karate.version>
-        <apimock.version>0.0.6</apimock.version>
+        <karate.version>1.2.0</karate.version>
+        <apimock.version>0.1.0</apimock.version>
     </properties>
 
     <dependencies>
@@ -21,6 +21,12 @@
             <groupId>io.github.zenwave360</groupId>
             <artifactId>zenwave-apimock</artifactId>
             <version>${apimock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.intuit.karate</groupId>
+            <artifactId>karate-core</artifactId>
+            <version>${karate.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
